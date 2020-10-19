@@ -84,9 +84,15 @@ mongoDB().then(() => {
 .catch(err => console.log("aaaaa"))
 
 function mongoDB() {
-  return mongoose.connect("mongodb+srv://meir:737373@cluster0.pg9yx.mongodb.net/cluster0?retryWrites=true&w=majority", {
+  return mongoose.connect(`mongodb+srv://meir:${process.env.ATLAS}@cluster0.pg9yx.mongodb.net/cluster0?retryWrites=true&w=majority`
+    , {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   });
 } 
+// writeUsers({
+//   username: "meir",
+//   password: 1234,
+//   admin: true,
+// })
