@@ -70,32 +70,29 @@ app.post("/api/productToCart", (req, res) => {
     res.send(response);
   }
 });
-console.log(process.env.PORT);
 app.get("*", (req, res)=>{
 res.sendFile(__dirname+"/client/build/index.html")
  
 })
 
-// console.log(process.env.DB_HOST);
-app.listen(process.env.PORT, () => {
-  console.log("Example app listening on port 8000!");
-});
-// mongoDB().then(() => {
-//   app.listen(process.env.PORT, () => {
-//     console.log("Example app listening on port 8000!");
-//   });
-// })
-// .catch(err => console.log("aaaaa"))
+/
+mongoDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log("Example app listening on port 8000!");
+  });
+})
+.catch(err => console.log("aaaaa"))
 
 function mongoDB() {
-  return mongoose.connect("mongodb://localhost/test", {
+  return mongoose.connect("mongodb+srv://meir:737373@cluster0.pg9yx.mongodb.net/cluster0?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   });
 } 
-// writeUsers({
-//   username: "meir",
-//   password: 1234,
-//   admin: true,
-// })
+
+writeUsers({
+  username: "meir",
+  password: 1234,
+  admin: true,
+})

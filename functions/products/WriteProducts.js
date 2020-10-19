@@ -1,7 +1,7 @@
 const { Products } = require("../../mongo/Model");
 
 module.exports = function writeProducts(Product, callback) {
-  console.log(typeof Product.body.image);
+  // console.log(typeof Product.body.image);
   Product = Product.body;
   let Product1;
 
