@@ -20,7 +20,7 @@ function App() {
             productInCart: products[indxeProduct].inCart,
           };
           axios
-            .post(`http://localhost:8000/api/productToCart`, obj)
+            .post(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/productToCart`, obj)
             .then((res) => console.log(res));
         }
       };
@@ -38,7 +38,7 @@ function App() {
             productInCart: products[indxeProduct].inCart,
           };
           axios
-            .post(`http://localhost:8000/api/productToCart`, obj)
+            .post(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/productToCart`, obj)
             .then((res) => console.log(res));
         }
       };
@@ -60,15 +60,15 @@ function App() {
     changeProductsInServer: (method, ruote, product) => {
       if (method === "post") {
         axios
-          .post(`http://localhost:8000/api/${ruote}`, product)
+          .post(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/${ruote}`, product)
           .then((res) => console.log(res));
       } else if (method === "delete") {
         axios
-          .delete(`http://localhost:8000/api/${ruote}`)
+          .delete(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/${ruote}`)
           .then((res) => console.log(res));
       } else if (method === "put") {
         axios
-          .put(`http://localhost:8000/api/${ruote}`, product)
+          .put(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/${ruote}`, product)
           .then((res) => console.log(res));
       }
     },
@@ -78,7 +78,7 @@ function App() {
       funcLogin: async (username, password) => {
         let response = "fault";
         await axios
-          .post(`http://localhost:8000/api/login`, {
+          .post(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api/login`, {
             username: username,
             password: password,
           })
@@ -90,7 +90,7 @@ function App() {
             }
             setUser(res.data.user);
             let products = await axios
-              .get("http://127.0.0.1:8000/api")
+              .get(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api`)
               .then((res) => {
                 for (var i = 0; i < res.data.length; i++) {
                   res.data[i].key = i;
@@ -106,7 +106,7 @@ function App() {
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api").then((res) => {
+    axios.get(`http://localhost:${process.env.PORT ? process.env.PORT : 8001}/api`).then((res) => {
       for (var i = 0; i < res.data.length; i++) {
         res.data[i].key = i;
       }

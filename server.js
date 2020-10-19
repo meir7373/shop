@@ -77,8 +77,8 @@ res.sendFile(__dirname+"/client/build/index.html")
 
 /
 mongoDB().then(() => {
-  app.listen(process.env.PORT, () => {
-    console.log("Example app listening on port 8000!");
+  app.listen(process.env.PORT ? process.env.PORT : 8001, () => {
+    console.log(`Example app listening on port ${process.env.PORT ? process.env.PORT : 8001}!`);
   });
 })
 .catch(err => console.log("aaaaa"))
