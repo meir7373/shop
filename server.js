@@ -90,9 +90,3 @@ function mongoDB() {
     useUnifiedTopology: true,
   });
 } 
-
-writeUsers({
-  username: "meir",
-  password: 1234,
-  admin: true,
-})
