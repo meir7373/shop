@@ -15,13 +15,14 @@ module.exports = function (usernameAndPassword, callback) {
         admin: objUser.admin,
       };
       response.user = user;
+
       Users.findOne({
         username: usernameAndPassword.username,
         password: usernameAndPassword.password,
       })
         .populate("inCart")
         .exec(async (err, USER) => {
-          if (USER) {
+          if (USER.inCart[0]) {
             var products = await remove_duplicates(USER.inCart);
             var inCart = await get_quantity_in_cart(USER.inCart, products);
             response.products = inCart;

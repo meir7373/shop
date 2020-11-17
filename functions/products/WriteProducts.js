@@ -1,10 +1,6 @@
 const { Products } = require("../../mongo/Model");
 
 module.exports = function writeProducts(Product, callback) {
-  // console.log(typeof Product.body.image);
-  Product = Product.body;
-  let Product1;
-
   if (Product[0]) {
     let resp = [...Array(Product.length)];
     Product.map((Product11, i) => {

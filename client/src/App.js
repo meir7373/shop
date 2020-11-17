@@ -3,7 +3,11 @@ import MyRouter from "./componnts/MyRouter";
 import axios from "axios";
 import { ProductsProvider } from "./componnts/ProductsContext";
 const { useEffect, useState } = React;
-
+const ServerAddress =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8000"
+    : "https://shop3737.herokuapp.com";
+console.log(ServerAddress);
 function App() {
   const [products, setProducts] = useState();
   const [user, setUser] = useState();
@@ -20,7 +24,7 @@ function App() {
             productInCart: products[indxeProduct].inCart,
           };
           axios
-            .post(`https://shop3737.herokuapp.com/api/productToCart`, obj)
+            .post(`${ServerAddress}/api/productToCart`, obj)
             .then((res) => console.log(res));
         }
       };
@@ -38,7 +42,7 @@ function App() {
             productInCart: products[indxeProduct].inCart,
           };
           axios
-            .post(`https://shop3737.herokuapp.com/api/productToCart`, obj)
+            .post(`${ServerAddress}/api/productToCart`, obj)
             .then((res) => console.log(res));
         }
       };
@@ -60,15 +64,15 @@ function App() {
     changeProductsInServer: (method, ruote, product) => {
       if (method === "post") {
         axios
-          .post(`https://shop3737.herokuapp.com/api/${ruote}`, product)
+          .post(`${ServerAddress}/api/${ruote}`, product)
           .then((res) => console.log(res));
       } else if (method === "delete") {
         axios
-          .delete(`https://shop3737.herokuapp.com/api/${ruote}`)
+          .delete(`${ServerAddress}/api/${ruote}`)
           .then((res) => console.log(res));
       } else if (method === "put") {
         axios
-          .put(`https://shop3737.herokuapp.com/api/${ruote}`, product)
+          .put(`${ServerAddress}/api/${ruote}`, product)
           .then((res) => console.log(res));
       }
     },
@@ -78,7 +82,7 @@ function App() {
       funcLogin: async (username, password) => {
         let response = "fault";
         await axios
-          .post(`https://shop3737.herokuapp.com/api/login`, {
+          .post(`${ServerAddress}/api/login`, {
             username: username,
             password: password,
           })
@@ -90,15 +94,18 @@ function App() {
             }
             setUser(res.data.user);
             let products = await axios
-              .get(`https://shop3737.herokuapp.com/api`)
+              .get(`${ServerAddress}/api`)
               .then((res) => {
                 for (var i = 0; i < res.data.length; i++) {
                   res.data[i].key = i;
                 }
                 return res.data;
               });
-
-            setProducts([...getProductsFromUser(products, res.data.products)]);
+            if (res.data.products !== undefined) {
+              setProducts([
+                ...getProductsFromUser(products, res.data.products),
+              ]);
+            }
           });
         return response;
       },
@@ -106,7 +113,7 @@ function App() {
   };
 
   useEffect(() => {
-    axios.get(`https://shop3737.herokuapp.com/api`).then((res) => {
+    axios.get(`${ServerAddress}/api`).then((res) => {
       for (var i = 0; i < res.data.length; i++) {
         res.data[i].key = i;
       }
